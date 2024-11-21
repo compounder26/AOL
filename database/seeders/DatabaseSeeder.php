@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Event;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,11 +13,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Generate 5 Random Users
+        $users = User::factory()->count(5)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Generate 10 Random Events
+        $events = Event::factory()
+            ->count(10)
+            ->state(function () use ($users) {
+                return [
+                    'created_by' => $users->random()->id, // Assign a random user as creator
+                ];
+            })
+            ->create();
+
+        // Assign Users to Events
+        foreach ($users as $user) {
+            // Randomly Assign User to Create Some Events
+            $user->createdEvents()->saveMany($events->random(2));
+
+            // Randomly Register User to Some Events
+            $user->registeredEvents()->attach($events->random(3));
+        }
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Validation\ValidationException;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -24,12 +25,16 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        try {
+            $request->authenticate(); // Validate and authenticate user
+            $request->session()->regenerate(); // Prevent session fixation attacks
 
-        $request->session()->regenerate();
+            return redirect()->route('events.index')->with('success', 'Successfully logged in!');
+        } catch (ValidationException $e) {
+            return redirect()->back()->withErrors(['email' => 'Invalid credentials.']);
+        }
+}
 
-        return redirect()->intended(route('dashboard', absolute: false));
-    }
 
     /**
      * Destroy an authenticated session.
