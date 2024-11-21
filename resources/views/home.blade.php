@@ -42,7 +42,7 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
             </div>
-            <button type="submit" class="btn btn-success btn-block">LOGIN</button>
+            <button type="submit" class="btn btn-success btn-block">Login</button>
         </form>
 
         <div class="text-center mt-3">
