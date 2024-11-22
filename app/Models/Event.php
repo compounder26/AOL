@@ -14,10 +14,11 @@ class Event extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function attendees(): BelongsToMany
+    public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'event_user');
+        return $this->belongsToMany(User::class, 'event_user')->withTimestamps();
     }
+
 
     use HasFactory;
 
@@ -30,5 +31,10 @@ class Event extends Model
         'notes',
         'slots',
         'created_by',
+    ];
+
+    protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
     ];
 }

@@ -4,15 +4,18 @@
 
 @section('content')
 <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center">
-        <h1 class="text-success">Suggested Volunteering Activities</h1>
-        <div>
-            <a href="{{ route('dashboard') }}" class="btn btn-outline-primary me-2">My Dashboard</a>
-            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                @csrf
-                <button type="submit" class="btn btn-outline-danger">Logout</button>
-            </form>
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="text-success">Suggested Volunteering Activities</h1>
+            <div>
+                <a href="{{ route('events.create') }}" class="btn btn-outline-success me-2">Create Event</a>
+                <a href="{{ route('dashboard') }}" class="btn btn-outline-primary me-2">My Dashboard</a>
+                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-danger">Logout</button>
+                </form>
+            </div>
         </div>
+        
     </div>
 
     @if(session('success'))

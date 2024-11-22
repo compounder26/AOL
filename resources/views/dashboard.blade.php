@@ -33,7 +33,7 @@
                     @endforelse
 
                     <h4 class="mt-4">Registered Events</h4>
-                    @forelse(auth()->user()->registeredEvents as $event)
+                    @forelse(auth()->user()->events as $event)
                         <div class="mb-2">
                             <a href="{{ route('events.show', $event->id) }}">{{ $event->name }}</a>
                         </div>

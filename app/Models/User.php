@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Event;
 
 class User extends Authenticatable
 {
@@ -53,8 +54,8 @@ class User extends Authenticatable
         return $this->hasMany(Event::class, 'created_by');
     }
 
-    public function registeredEvents(): BelongsToMany
+    public function events(): BelongsToMany
     {
-        return $this->belongsToMany(Event::class, 'event_user');
+        return $this->belongsToMany(Event::class, 'event_user')->withTimestamps();
     }
 }

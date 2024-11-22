@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             $user->createdEvents()->saveMany($events->random(2));
 
             // Randomly Register User to Some Events
-            $user->registeredEvents()->attach($events->random(3));
+            $user->events()->attach($events->random(3));
         }
     }
 }

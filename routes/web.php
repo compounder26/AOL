@@ -17,11 +17,13 @@ Route::middleware('guest')->group(function () {
 
 // Events
 Route::middleware('auth')->group(function () {
-    Route::get('/events', [EventController::class, 'index'])->name('events.index'); // Events Index
-    Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show'); // Event Details
-    Route::get('/events/create', [EventController::class, 'create'])->name('events.create'); // Create Event Form
-    Route::post('/events', [EventController::class, 'store'])->name('events.store'); // Store New Event
-    Route::post('/events/{id}/register', [EventController::class, 'registerForEvent'])->name('events.register'); // Register for an Event
+    // Move the create route before the show route
+    Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+    Route::get('/events', [EventController::class, 'index'])->name('events.index');
+    Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
+    Route::post('/events', [EventController::class, 'store'])->name('events.store');
+    Route::post('/events/{id}/register', [EventController::class, 'register'])->name('events.register');
+    
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
