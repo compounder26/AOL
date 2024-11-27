@@ -36,9 +36,15 @@ class EventController extends Controller
     }
 
     
-    public function show($id)
+    public function show($id, Request $request)
     {
-        $event = Event::findOrFail($id); // Fetch event by ID
+        $event = Event::findOrFail($id);
+
+        // Store the referring page in the session (only if not coming from this page itself)
+        if (!$request->headers->get('referer') || strpos($request->headers->get('referer'), "/events/{$id}") === false) {
+            session(['referrer_url' => $request->headers->get('referer')]);
+        }
+
         return view('events.show', compact('event'));
     }
 

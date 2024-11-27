@@ -5,7 +5,7 @@
 @section('content')
 <div class="container mt-4">
     <!-- Back Button -->
-    <a href="{{ url()->previous() }}" class="btn btn-outline-primary mb-3">Back</a>
+    <a href="{{ session('referrer_url', route('events.index')) }}" class="btn btn-outline-primary mb-3">Back</a>
 
     @if(session('success'))
         <div class="alert alert-success mt-3">
@@ -48,11 +48,8 @@
                             You are already registered for this event.
                         </div>
                     @elseif($event->slots > 0)
-                        <!-- Show the register button for ongoing events -->
-                        <form action="{{ route('events.register', $event->id) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-success w-100">Register</button>
-                        </form>
+                        <!-- Show the modal trigger button -->
+                        <button class="btn btn-success w-100" data-toggle="modal" data-target="#registerModal">Register</button>
                     @else
                         <!-- Show a message if the event is full -->
                         <div class="alert alert-danger mt-3">
@@ -60,6 +57,30 @@
                         </div>
                     @endif
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #d4e9d4;">
+                <h5 class="modal-title" id="registerModalLabel">Confirm Registration</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you willing to commit to this volunteer event and follow the program until its completion?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <form action="{{ route('events.register', $event->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-success">Yes</button>
+                </form>
             </div>
         </div>
     </div>
