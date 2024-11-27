@@ -21,11 +21,20 @@ class EventController extends Controller
     }
 
     // Events Index
-    public function index()
+    public function index(Request $request)
     {
-        $events = Event::all(); // Fetch all events
-        return view('events.index', compact('events')); // Pass events to the view
+        $filter = $request->query('filter', 'ongoing');
+        $today = now();
+
+        if ($filter === 'past') {
+            $events = Event::where('end_time', '<', $today)->get();
+        } else { // Default to 'ongoing'
+            $events = Event::where('end_time', '>=', $today)->get();
+        }
+
+        return view('events.index', compact('events'));
     }
+
     
     public function show($id)
     {
@@ -66,9 +75,14 @@ class EventController extends Controller
     }
 
 
-    public function register(Request $request, $id)
+        public function register(Request $request, $id)
     {
         $event = Event::findOrFail($id);
+
+        // Check if the event has already concluded
+        if ($event->end_time < now()) {
+            return redirect()->route('events.show', $id)->with('error', 'This event has already concluded.');
+        }
 
         // Check if the user has already registered for the event
         if (Auth::user()->events()->where('events.id', $id)->exists()) {
@@ -90,5 +104,17 @@ class EventController extends Controller
         } else {
             return redirect()->route('events.show', $id)->with('error', 'Sorry, this event is already full.');
         }
+    }
+
+    public function registeredEvents()
+    {
+        $events = Auth::user()->events; // Assuming a `belongsToMany` relationship exists
+        return view('events.registered', compact('events'));
+    }
+
+    public function myEvents()
+    {
+        $createdEvents = Auth::user()->createdEvents; // Assuming a `hasMany` relationship exists
+        return view('events.my', compact('createdEvents'));
     }
 }

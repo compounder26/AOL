@@ -4,7 +4,8 @@
 
 @section('content')
 <div class="container mt-4">
-    <a href="{{ route('events.index') }}" class="btn btn-outline-primary mb-3">Back to Events</a>
+    <!-- Back Button -->
+    <a href="{{ url()->previous() }}" class="btn btn-outline-primary mb-3">Back</a>
 
     @if(session('success'))
         <div class="alert alert-success mt-3">
@@ -35,16 +36,25 @@
                     <p><strong>Date and Time:</strong> {{ $event->start_time->format('d M Y, H:i') }} - {{ $event->end_time->format('H:i') }}</p>
                     <p><strong>Organizer:</strong> {{ $event->organizer }}</p>
                     <p><strong>Slots Available:</strong> {{ $event->slots }}</p>
-                    @if(Auth::user()->events->contains($event->id))
+
+                    @if($event->end_time < now())
+                        <!-- Show a message for past events -->
+                        <div class="alert alert-secondary mt-3">
+                            This event has concluded.
+                        </div>
+                    @elseif(Auth::user()->events->contains($event->id))
+                        <!-- Show a message if the user is already registered -->
                         <div class="alert alert-info mt-3">
                             You are already registered for this event.
                         </div>
                     @elseif($event->slots > 0)
+                        <!-- Show the register button for ongoing events -->
                         <form action="{{ route('events.register', $event->id) }}" method="POST">
                             @csrf
                             <button type="submit" class="btn btn-success w-100">Register</button>
                         </form>
                     @else
+                        <!-- Show a message if the event is full -->
                         <div class="alert alert-danger mt-3">
                             This event is full.
                         </div>
