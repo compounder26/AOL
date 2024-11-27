@@ -123,4 +123,60 @@ class EventController extends Controller
         $createdEvents = Auth::user()->createdEvents; // Assuming a `hasMany` relationship exists
         return view('events.my', compact('createdEvents'));
     }
+
+    public function edit($id)
+    {
+        $event = Event::findOrFail($id);
+    
+        // Ensure the authenticated user is the creator of the event
+        if ($event->created_by !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+    
+        return view('events.edit', compact('event'));
+    }
+    
+    public function update(Request $request, $id)
+    {
+        $event = Event::findOrFail($id);
+    
+        // Ensure the authenticated user is the creator of the event
+        if ($event->created_by !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+    
+        $validated = $request->validate([
+            'name' => 'required|string|max:100',
+            'photo' => 'image|mimes:jpeg,png|max:2048',
+            'start_time' => 'required|date|after_or_equal:now',
+            'end_time' => 'required|date|after:start_time',
+            'organizer' => 'required|string|max:100',
+            'notes' => 'required|string',
+            'slots' => 'required|integer|min:1',
+        ]);
+    
+        if ($request->hasFile('photo')) {
+            $fileName = time() . '_' . $request->file('photo')->getClientOriginalName();
+            $filePath = $request->file('photo')->storeAs('event_photos', $fileName, 'public');
+            $validated['photo'] = $filePath;
+        }
+    
+        $event->update($validated);
+    
+        return redirect()->route('events.my')->with('success', 'Event updated successfully!');
+    }
+    
+    public function destroy($id)
+    {
+        $event = Event::findOrFail($id);
+    
+        // Ensure the authenticated user is the creator of the event
+        if ($event->created_by !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+    
+        $event->delete();
+    
+        return redirect()->route('events.my')->with('success', 'Event deleted successfully!');
+    }    
 }
