@@ -19,22 +19,6 @@ class EventController extends Controller
         // Default home page view for guests
         return view('home');
     }
-
-    // Events Index
-    public function index(Request $request)
-    {
-        $filter = $request->query('filter', 'ongoing');
-        $today = now();
-
-        if ($filter === 'past') {
-            $events = Event::where('end_time', '<', $today)->get();
-        } else { // Default to 'ongoing'
-            $events = Event::where('end_time', '>=', $today)->get();
-        }
-
-        return view('events.index', compact('events'));
-    }
-
     
     public function show($id, Request $request)
     {
@@ -179,4 +163,39 @@ class EventController extends Controller
     
         return redirect()->route('events.my')->with('success', 'Event deleted successfully!');
     }    
+
+
+        public function index(Request $request)
+    {
+        $filter = $request->query('filter', 'ongoing');
+        $search = $request->query('search', '');
+        $startDate = $request->query('start_date');
+        $endDate = $request->query('end_date');
+        $today = now();
+
+        $query = Event::query();
+
+        if ($filter === 'past') {
+            $query->where('end_time', '<', $today);
+        } else {
+            $query->where('end_time', '>=', $today);
+        }
+
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        if ($startDate) {
+            $query->where('start_time', '>=', $startDate);
+        }
+
+        if ($endDate) {
+            $query->where('end_time', '<=', $endDate);
+        }
+
+        $events = $query->get();
+
+        return view('events.index', compact('events'));
+    }
+
 }

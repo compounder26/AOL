@@ -15,6 +15,25 @@
         </div>
     @endif
 
+    <!-- Search and Filter Form -->
+    <form method="GET" action="{{ route('events.index') }}" class="row g-3 my-4">
+        <div class="col-md-4">
+            <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Search events by name">
+        </div>
+        <div class="col-md-3">
+            <input type="date" name="start_date" value="{{ request('start_date') }}" class="form-control" placeholder="Start Date">
+            <small class="form-text text-muted">Filter events starting on or after this date.</small>
+        </div>
+        <div class="col-md-3">
+            <input type="date" name="end_date" value="{{ request('end_date') }}" class="form-control" placeholder="End Date">
+            <small class="form-text text-muted">Filter events ending on or before this date.</small>
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+            <button type="submit" class="btn btn-success w-100">Filter</button>
+        </div>
+    </form>
+    
+
     <!-- Toggle Buttons -->
     <div class="d-flex justify-content-center my-4">
         <a href="{{ route('events.index', ['filter' => 'ongoing']) }}" 
