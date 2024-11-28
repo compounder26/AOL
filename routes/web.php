@@ -7,19 +7,24 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\auth\RegisteredUserController;
 use App\Http\Controllers\auth\AuthenticatedSessionController;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\PaymentController;
 
 Route::get('/about', [PageController::class, 'about'])->name('about');
 
 Route::middleware('guest')->group(function () {
-    Route::get('/', [AuthenticatedSessionController::class, 'store'])->name('login');
-    Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
-    Route::post('/register', [RegisteredUserController::class, 'store']);
+    Route::get('/', function () {
+        return view('auth.login'); // Ensure this points to your login view
+    })->name('login'); // Make sure the name matches the route expected by Breeze
+    Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
 });
 
+
 // Events
 Route::middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return redirect()->route('events.index'); // Redirect to events.index or another preferred page
+    });
+
     // Move the create route before the show route
     Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
     Route::get('/events/registered', [EventController::class, 'registeredEvents'])->name('events.registered');
@@ -31,8 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/events/{id}', [EventController::class, 'destroy'])->name('events.destroy');
     Route::post('/events', [EventController::class, 'store'])->name('events.store');
     Route::post('/events/{id}/register', [EventController::class, 'register'])->name('events.register');
-    
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
