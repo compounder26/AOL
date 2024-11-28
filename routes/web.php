@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\auth\RegisteredUserController;
 use App\Http\Controllers\auth\AuthenticatedSessionController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PaymentController;
 
 Route::get('/about', [PageController::class, 'about'])->name('about');
 

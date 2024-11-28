@@ -20,16 +20,44 @@
         }
         .navbar {
             background-color: #5a995a; /* Greenish theme for navbar */
+            padding: 1rem 1rem;
         }
         .navbar-brand {
             color: #fff;
+            font-weight: bold;
         }
         .navbar-brand:hover {
             color: #ddd;
         }
+        .navbar-toggler {
+            border: none;
+        }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
         .welcome-message {
             color: #fff;
             font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .navbar-nav .nav-item {
+            margin: 1rem 5rem; /* Spacing between each menu item */
+        }
+        .nav-link {
+            color: #fff !important;
+            font-size: 1.5rem;
+        }
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+        .btn-logout {
+            margin: 0.5rem 0;
+            text-align: center;
+        }
+        .collapse.show {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
     </style>
 </head>
@@ -39,39 +67,37 @@
         <header>
             <nav class="navbar navbar-expand-lg navbar-light">
                 <a class="navbar-brand" href="{{ route('events.index') }}">NOVERTY</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
+                <div class="collapse navbar-collapse text-center" id="navbarNav">
+                    <ul class="navbar-nav">
                         <li class="nav-item">
                             <span class="welcome-message">WELCOME, {{ auth()->user()->name }}</span>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" href="{{ route('about') }}">About</a>
+                            <a class="nav-link" href="{{ route('about') }}">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" href="{{ route('events.registered') }}">Registered Events</a>
+                            <a class="nav-link" href="{{ route('events.registered') }}">Registered Events</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" href="{{ route('events.my') }}">My Events</a>
+                            <a class="nav-link" href="{{ route('events.my') }}">My Events</a>
                         </li>
-                        <li class="nav-item">
-                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                        <li class="nav-item btn-logout">
+                            <form action="{{ route('logout') }}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-danger btn-sm ms-2">Logout</button>
+                                <button type="submit" class="btn btn-danger btn-sm">Logout</button>
                             </form>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
-
         <!-- Main Content -->
         <main class="flex-grow-1">
             @yield('content')
         </main>
-
         <!-- Footer -->
         <footer class="text-center p-3">
             &copy;2024 Web Programming
