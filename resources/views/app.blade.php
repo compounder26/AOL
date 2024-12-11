@@ -9,8 +9,8 @@
         integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>{{ env('APP_NAME') }}</title>
-    <link rel="stylesheet" href="build/assets/app.css">
-    <link rel="stylesheet" href="build/assets/style_thad.css">
+    <link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/style_thad.css') }}">
 </head>
 
 <body>
@@ -22,7 +22,7 @@
             @yield('footer')
         </div>
     </div>
-    <script src="build/assets/app.js"></script>
+    <script src="{{ asset('build/assets/app.js') }}"></script>
 </body>
 
 </html>
