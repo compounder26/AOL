@@ -37,7 +37,7 @@ return new class extends Migration
             $table->string('location');
             $table->string('image');
             $table->text('description');
-            $table->string('note');
+            $table->string('note')->nullable();
             $table->integer('quota');
             $table->timestamps();
         });
@@ -47,15 +47,6 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users', 'id');
             $table->foreignId('event_id')->constrained('events', 'id');
             $table->timestamps();
-        });
-
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->text('payload');
-            $table->integer('last_activity')->index();
         });
     }
 

@@ -13,17 +13,25 @@
             <div class="card-body">
                 @forelse ($events as $event)
                     <div class="row align-items-center border-bottom py-4 hover-highlight">
-                        <div class="col-md-3 text-center">
-                            <img src="{{ asset($event->image) }}" class="img-fluid rounded" style="max-height: 400px; object-fit: cover;">
+                        <div class="col-3 text-center">
+                            <img src="{{ asset($event->image) }}" class="img-fluid rounded"
+                                style="max-height: 400px; object-fit: cover;">
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-3">
                             <h5 class="text-success" style="margin-left: 200px">{{ $event->title }}</h5>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-3">
                             <p class="text" style="margin-left: 200px">{{ $event->dateTime }}</p>
                         </div>
-                        <div class="col-md-3 text-end">
-                            <a href="/events?id={{ $event->id }}" class="btn btn-outline-success">View Event Details</a>
+                        <div class="col-1">
+                            <a href="/editEvent?id={{ $event->id }}"
+                                style="text-decoration: none; color: white; background: #1F6B2E; padding: 4px 8px; border-radius: 4px">Edit
+                                Event</a>
+                        </div>
+                        <div class="col-2">
+                            <a href="/deleteEvent?id={{ $event->id }}"
+                                style="text-decoration: none; color: white; background: #1F6B2E; padding: 4px 8px; border-radius: 4px">Delete
+                                Event</a>
                         </div>
                     </div>
                 @empty
@@ -32,6 +40,9 @@
                         <p class="text-success">Check back soon!</p>
                     </div>
                 @endforelse
+            </div>
+            <div class="row">
+                {{ $events->links() }}
             </div>
         </div>
     </div>

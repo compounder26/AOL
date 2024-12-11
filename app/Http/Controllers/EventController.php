@@ -41,20 +41,21 @@ class EventController extends Controller
         $image_name = time() . '.' . $image->extension();
         Storage::putFileAs('public/images', $image, $image_name);
         $image_name = 'storage/images/' . $image_name;
-        Event::create([
-            'user_id' => Auth::user()->id,
-            'category_id' => $request->category,
-            'title'=> $request->title,
-            'dateTime' => $request->dateTime,
-            'organizer'=> $request->organizer,
-            'orgEmail'=> $request->orgEmail,
-            'location' => $request->location,
-            'image' => $image_name,
-            'description' => $request->description,
-            'note' => $request->note,
-            'quota' => $request->quota,
-        ]);
-
+        $event = new Event();
+        $event->user_id = Auth::user()->id;
+        $event->category_id = $request->category;
+        $event->title = $request->title;
+        $event->dateTime = $request->dateTime;
+        $event->organizer = $request->organizer;
+        $event->orgEmail = $request->orgEmail;
+        $event->image = $image_name;
+        $event->location = $request->location;
+        $event->description = $request->description;
+        if($request->note){
+            $event->note = $request->note;
+        }
+        $event->quota = $request->quota;
+        $event->save();
         return redirect('/myEvent');
     }
 
@@ -79,5 +80,50 @@ class EventController extends Controller
     public function registeredDetail(Request $request){
         $event = Event::find($request->id);
         return view('pages.registeredDetail', ['event' => $event]);
+    }
+
+    public function editEvent(Request $request){
+        $event = Event::find($request->id);
+        $categories = Category::all();
+        return view('pages.editEvent', ['event' => $event, 'categories' => $categories]);
+    }
+
+    public function deleteEvent(Request $request){
+        Event::where('id', $request->id)->delete();
+        return redirect('/myEvent');
+    }
+
+    public function commenceEditEvent(Request $request){
+        $this->validate($request, [
+            'title' => 'required',
+            'dateTime' => 'required|date',
+            'organizer' => 'required',
+            'orgEmail' => 'required|email',
+            'location' => 'required',
+            'image' => 'image',
+            'description' => 'required',
+            'quota'=> 'required|integer',
+        ]);
+        $event = Event::find($request->id);
+        $event->title = $request->title;
+        $event->category_id = $request->category;
+        $event->dateTime = $request->dateTime;
+        $event->organizer = $request->organizer;
+        $event->orgEmail = $request->orgEmail;
+        $event->location = $request->location;
+        $event->description = $request->description;
+        $event->note = $request->note;
+        $event->quota = $request->quota;
+
+        if($request->hasFile('image')){
+            Storage::delete($menu->image);
+            $image = $request->image;
+            $image_name = time() . '.' . $image->extension();
+            Storage::putFileAs('public/images', $image, $image_name);
+            $image_name = 'storage/images/' . $image_name;
+        }
+
+        $event->save();
+        return redirect('/myEvent');
     }
 }

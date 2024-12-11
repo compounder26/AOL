@@ -40,10 +40,9 @@
                             <a class="nav-link {{ $page == 'myEvent' ? 'active' : '' }}" aria-current="page"
                                 href="/myEvent">My Event</a>
                         </li>
-                        <form action="/logout" method="POST" class="d-inline">
-                            @csrf
-                            <button type="submit" class="nav-link" style="background: none; border: none;">Logout</button>
-                        </form>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/logout">Logout</a>
+                        </li>
                     </ul>
                 </div>
             </div>
