@@ -4,37 +4,38 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Event extends Model
 {
-    public function creator(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
-
-    public function users(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class, 'event_user')->withTimestamps();
-    }
-
-
     use HasFactory;
 
+    protected $table = 'events';
+
     protected $fillable = [
-        'name',
-        'photo',
-        'start_time',
-        'end_time',
+        'user_id',
+        'category_id',
+        'title',
+        'dateTime',
         'organizer',
-        'notes',
-        'slots',
-        'created_by',
+        'orgEmail',
+        'location',
+        'image',
+        'description',
+        'note',
+        'quota',
     ];
 
-    protected $casts = [
-        'start_time' => 'datetime',
-        'end_time' => 'datetime',
+    protected $hidden = [
+        'updated_at',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 }
