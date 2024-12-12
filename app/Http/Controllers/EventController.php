@@ -74,7 +74,7 @@ class EventController extends Controller
 
     public function registeredEvents(){
         $events = Event::whereIn('id', UserEvent::where('user_id', Auth::user()->id)->pluck('event_id'))->get();
-        return view('pages.RegisteredEvents', ['events' => $events]);
+        return view('pages.registeredEvents', ['events' => $events]);
     }
 
     public function registeredDetail(Request $request){
