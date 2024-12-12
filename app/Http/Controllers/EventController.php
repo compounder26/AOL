@@ -17,7 +17,7 @@ class EventController extends Controller
             $search = $request->search;
         }
         $events = Event::where('title', 'LIKE', '%' . $search . '%')->
-        orWhereIn('category_id', Category::where('name', 'LIKE', '%' . $search . '%')->pluck('id'))->paginate(3);
+        orWhereIn('category_id', Category::where('name', 'LIKE', '%' . $search . '%')->pluck('id'))->paginate(6);
         return view('pages.events', ['events' => $events]);
     }
 
@@ -61,7 +61,10 @@ class EventController extends Controller
 
     public function detail(Request $request){
         $event = Event::find($request->id);
-        return view('pages.eventDetail', ['event' => $event]);
+        $isRegistered = UserEvent::where('user_id', Auth::user()->id)
+            ->where('event_id', $request->id)
+            ->exists();
+        return view('pages.eventDetail', ['event' => $event, 'isRegistered' => $isRegistered]);
     }
 
     public function regEvent(Request $request){
@@ -116,11 +119,12 @@ class EventController extends Controller
         $event->quota = $request->quota;
 
         if($request->hasFile('image')){
-            Storage::delete($menu->image);
+            Storage::delete($event->image);
             $image = $request->image;
             $image_name = time() . '.' . $image->extension();
             Storage::putFileAs('public/images', $image, $image_name);
             $image_name = 'storage/images/' . $image_name;
+            $event->image = $image_name;
         }
 
         $event->save();

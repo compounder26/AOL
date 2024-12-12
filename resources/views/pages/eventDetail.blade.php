@@ -30,7 +30,7 @@ use App\Models\UserEvent;
         </div>
         <div class="row" style="gap:30px">
             <div class="col-md-4 mb-5">
-                <img src="{{ $event->image }}" height="500px" width="350px" alt="Event Image" style="margin-top:50px;margin-left:50px">
+                <img src="{{ $event->image }}" height="400px" width="300px" alt="Event Image" style="margin-top:50px;margin-left:50px">
             </div>
             <div class="col-md-7" style="margin-top:45px; margin-right:50px">
                 <p style="font-weight:bold">Description</p>
@@ -42,10 +42,17 @@ use App\Models\UserEvent;
                 <p><span style="font-weight: bold">Special Notes: </span><span>{{ $event->note }}</span></p>
 
                 <div class="d-flex flex-column align-items-center gap-3 mt-4">
-                    <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#exampleModal" style="max-width: 400px">
-                        <i class="bi bi-pencil"></i>
-                        <span style="font-size:18px; margin-left:8px">Register</span>
-                    </button>
+                    @if(!$isRegistered)
+                        <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#exampleModal" style="max-width: 400px">
+                            <i class="bi bi-pencil"></i>
+                            <span style="font-size:18px; margin-left:8px">Register</span>
+                        </button>
+                    @else
+                        <button class="btn btn-secondary w-100" style="max-width: 400px; cursor: not-allowed; background-color: #654321; border: none" disabled>
+                            <i class="bi bi-check-circle"></i>
+                            <span style="font-size:18px; margin-left:8px">Already Registered</span>
+                        </button>
+                    @endif
                     <button class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#contactModal" style="max-width: 400px; background-color: rgb(172, 172, 172); border:none">
                         <i class="bi bi-envelope"></i>
                         <span style="font-size:18px; margin-left: 8px">Contact Organizer</span>

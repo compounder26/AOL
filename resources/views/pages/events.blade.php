@@ -5,46 +5,35 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid" style="background-color: #E8FFEC;">
         <br>
         <br>
         <div class="heading">
             <h1>Events</h1>
         </div>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Poster</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($events as $event)
-                    <tr>
-                        <td>
-                            <img src="{{ $event->image }}" height="200px" width="120px" alt="Event Image">
-                        </td>
-                        <td>
-                            <p>{{ $event->title }}</p>
-                        </td>
-                        <td>
-                            <p>{{ $event->dateTime }}</p>
-                        </td>
-                        <td>
-                            <a href="/events?id={{ $event->id }}" class="green"><i
-                                    class="fa-regular fa-eye"></i>Detail</a>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="4">No events yet!</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+        <div class="row d-flex justify-content-center">
+            @forelse ($events as $event)
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm" style="background-color: #C5F1CD; border-radius: 15px; overflow: hidden;">
+                        <img src="{{ $event->image }}" class="card-img-top" alt="Event Image"
+                            style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">{{ $event->title }}</h5>
+                            <p class="card-text mb-2">
+                                <i class="fas fa-calendar me-2"></i>
+                                {{ $event->dateTime }}
+                            </p>
+                            <a href="/events?id={{ $event->id }}" class="btn btn-success w-100 mt-2">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="col-12 text-center">
+                    <h1>No Events Available Yet!</h1>
+                </div>
+            @endforelse
+        </div>
         <div class="row">
             <div class="col-12">{{ $events->links() }}</div>
         </div>
