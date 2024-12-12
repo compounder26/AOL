@@ -4,7 +4,7 @@
 @if (Auth::check())
     <nav class="navbar fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand logo" href="#">{{ env('APP_NAME') }}</a>
+            <a class="navbar-brand logo" href="/home">NOVERTY</a>
             @auth
                 <a href="#" class="navbar-brand username">Hello, {{ Auth::user()->name }}</a>
             @endauth
