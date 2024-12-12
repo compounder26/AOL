@@ -18,12 +18,12 @@ use App\Models\UserEvent;
 </head>
 
 
-<body style="padding-top:100px; font-family:'Noto Music'">
-    <div class="container-fluid">
+<body style="padding-top:200px; font-family:'Noto Music'">
+    <div class="container-fluid" style="margin-top:100px">
         <div class="row align-items-center" style="margin:0 40px; display:flex; justify-content:space-between">
             <div class="back-container" style="margin-bottom:10px; align-items:center">
-                <a href="javascript:history.back()" class="back-link" style="display:flex; align-items:center; text-decoration:none; color:rgb(100, 100, 100); font-size:14px">
-                    <h6>< Back</h6>
+                <a href="javascript:history.back()" class="back-link" style="display:flex; align-items:center; text-decoration:none; color:rgb(100, 100, 100); font-size:18px">
+                    <h4 style="font-weight: bold">< Back</h4>
                 </a>
             </div>
             <h1>{{ $event->title }}</h1>

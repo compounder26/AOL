@@ -25,12 +25,12 @@
                         </div>
                         <div class="col-1">
                             <a href="/editEvent?id={{ $event->id }}"
-                                style="text-decoration: none; color: white; background: #1F6B2E; padding: 4px 8px; border-radius: 4px">Edit
+                                style="text-decoration: none; color: white; background: #3d53cd; padding: 4px 8px; border-radius: 4px">Edit
                                 Event</a>
                         </div>
                         <div class="col-2">
                             <a href="/deleteEvent?id={{ $event->id }}"
-                                style="text-decoration: none; color: white; background: #1F6B2E; padding: 4px 8px; border-radius: 4px">Delete
+                                style="text-decoration: none; color: white; background: #b70b0b; padding: 4px 8px; border-radius: 4px">Delete
                                 Event</a>
                         </div>
                     </div>

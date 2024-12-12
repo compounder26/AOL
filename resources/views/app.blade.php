@@ -15,11 +15,13 @@
     <link rel="stylesheet" href="build/assets/style_thad.css">
     <title>{{ env('APP_NAME') }}</title>
 </head>
-<body>
+<body style="min-height: 100vh;">
     <div class="min-vh-100 d-flex flex-column"
         style="overflow-x: hidden; margin: 0; padding: 0; width: 100%; max-width: 2000px;">
         @yield('header')
-        @yield('content')
+        <div class="flex-grow-1">
+            @yield('content')
+        </div>
         <div class="mt-auto">
             @yield('footer')
         </div>

@@ -25,7 +25,7 @@
                 @forelse ($events as $event)
                     <tr>
                         <td>
-                            <img src="{{ $event->image }}" height="200px" width="120px" alt="Event Image">
+                            <img src="{{ $event->image }}" height="200px" width="200px" alt="Event Image">
                         </td>
                         <td>
                             <p>{{ $event->title }}</p>
