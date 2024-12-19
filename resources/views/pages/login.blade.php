@@ -1,22 +1,22 @@
 @extends('app')
 
-{{-- @section('header')
+@section('header')
     @include('components.navbar', ['page' => 'login'])
-@endsection --}}
+@endsection
 
 @section('content')
 <head>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Music&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&family=Yaldevi:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Music&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&family=Yaldevi:wght@200..700&display=swap" rel="stylesheet">
 </head>
-    <body style="overflow:hidden; font-family:'Titillium Web'">
+    <body style="font-family:'Titillium Web'">
         <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh; min-width:100vw; position:relative; z-index:10">
             <div class="overlay" style="position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background-image: url('images/login.jpg'); background-size:cover; background-position:center; filter: brightness(50%); z-index: -10;"></div>
-            <div style="position: fixed; top: 5%; z-index: 1; color: white; font-size: 4rem; font-weight: bold; font-family:'Yaldevi'">
+            <div style="position: fixed; top: 8%; z-index: 1; color: white; font-size: 4rem; font-weight: bold; font-family:'Yaldevi'">
                 NOVERTY
             </div>
-            <div style="position: fixed; top: 17%; z-index: 1; color: white; font-size: 1rem">
+            <div style="position: fixed; top: 20%; z-index: 1; color: white; font-size: 1rem">
                 Good to see you! Let's make the world a better place!
             </div>
             <div class="card shadow p-3" style="width: 100%; max-width: 400px; border-radius:20px; z-index:0;margin-top:35px">

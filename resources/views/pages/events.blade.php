@@ -5,14 +5,14 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid" style="background-color: #E8FFEC;">
+    <div class="container-fluid" style="background-color: #E8FFEC; height:100%">
         <br>
         <br>
         <div class="heading">
             <h1>Events</h1>
         </div>
 
-        <div class="row d-flex justify-content-center">
+        <div class="row d-flex justify-content-center align-items-center">
             @forelse ($events as $event)
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 shadow-sm" style="background-color: #C5F1CD; border-radius: 15px; overflow: hidden;">

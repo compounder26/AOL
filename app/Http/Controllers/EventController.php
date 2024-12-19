@@ -40,7 +40,7 @@ class EventController extends Controller
         $image = $request->image;
         $image_name = time() . '.' . $image->extension();
         Storage::putFileAs('public/images', $image, $image_name);
-        $image_name = 'storage/images/' . $image_name;
+        $image_name = asset('storage/images/' . $image_name);
         $event = new Event();
         $event->user_id = Auth::user()->id;
         $event->category_id = $request->category;

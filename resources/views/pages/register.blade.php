@@ -1,8 +1,8 @@
 @extends('app')
 
-{{-- @section('header')
+@section('header')
     @include('components.navbar', ['page' => 'register'])
-@endsection --}}
+@endsection
 
 @section('content')
 <head>
@@ -13,10 +13,10 @@
     <body style="overflow:hidden; font-family:'Titillium Web'">
         <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh; min-width:100vw; position:relative; z-index:10">
             <div class="overlay" style="position: absolute; top: 0; left: 0; min-width: 100vw; min-height: 100vh; background-image: url('images/login.jpg'); background-size:cover; background-position:center; background-attachment:fixed; filter: brightness(50%); z-index: -10;"></div>
-            <div style="position:absolute;top: 2%; z-index: 1; color: white; font-size: 4rem; font-weight: bold; font-family: 'Yaldevi'">
+            <div style="position:absolute;top: 10%; z-index: 1; color: white; font-size: 4rem; font-weight: bold; font-family: 'Yaldevi'">
                 NOVERTY
             </div>
-            <div style="position:absolute;top: 13%; z-index: 1; color: white; font-size: 1rem">
+            <div style="position:absolute;top: 20%; z-index: 1; color: white; font-size: 1rem">
                 Thank you for taking the first steps in helping our world!
             </div>
             <div class="card shadow p-3" style="width: 100%; max-width: 400px; border-radius:20px; z-index:0;margin-top:140px">
